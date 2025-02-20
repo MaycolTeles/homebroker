@@ -28,6 +28,11 @@ shell:
 	poetry run python app/manage.py shell
 
 
+.PHONY: ssh
+ssh:
+	docker-compose exec backend bash
+
+
 .PHONY: test
 test:
 	poetry run pytest app/ -v -n auto

@@ -17,7 +17,10 @@ if TYPE_CHECKING:
 
 class BaseModelViewSet(ModelViewSet):
     """
-    Base ViewSet class to be used by all other ViewSets in the app.
+    Base ViewSet class to be used by other ViewSets in the app.
+
+    This ViewSet class must be inherited by all other ViewSets in the app
+    that needs the common behavior of filtering the queryset based on the user.
 
     This class provides a common `get_queryset` method that filters the queryset based on the user.
     If the user is a superuser, the entire queryset is returned.

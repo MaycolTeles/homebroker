@@ -1,11 +1,10 @@
 # ======= project =======
 [project]
-name = "django-api-template"
+name = "homebroker"
 version = "0.1.0"
-description = ""
+description = "A Homebroker as proposed by Full Cycle"
 authors = [
     {name = "Maycol Teles", email = "maycolteles@hotmail.com"},
-    {name = "Your Name", email = "yourname@example.com"},
 ]
 requires-python = ">= 3.12"
 readme = "README.md"
@@ -13,10 +12,10 @@ readme = "README.md"
 
 # ======= poetry =======
 [tool.poetry]
-name = "django-api-template"
+name = "homebroker"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "A Homebroker as proposed by Full Cycle"
+authors = ["Maycol Teles <maycolteles@hotmail.com>"]
 license = "GNU"
 readme = "README.md"
 package-mode = false
@@ -103,6 +102,8 @@ ignore = [
     "D401",
     # Section name should end with a newline (`D406`)
     "D406",
+    # Section underline should match the length of the section name (`D409`)
+    "D409",
     # Missing blank line after last section (`D413`)
     "D413",
     # Missing argument description in the docstring for `<method_name>`: `<argument_name>` (`D417`)
@@ -129,7 +130,7 @@ ignore = [
 
 
 [tool.ruff.lint.per-file-ignores]
-# Missing return type annotation for public function `function_name` (`ANN201`)
+# Missing return type annotation for public function <function_name> (`ANN201`)
 "test*.py" = ["ANN201"]
 # Missing docstring in public package (`D104`)
 "__init__.py" = ["D104"]

@@ -28,12 +28,12 @@ from drf_spectacular.views import (
 from rest_framework import routers
 
 from account.urls import router as account_router
-from product.urls import router as product_router
+from homebroker.urls import router as homebroker_router
 
 
 router = routers.DefaultRouter()
 router.registry.extend(account_router.registry)
-router.registry.extend(product_router.registry)
+router.registry.extend(homebroker_router.registry)
 
 
 urlpatterns = [

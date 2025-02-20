@@ -27,7 +27,7 @@ class BaseModel(models.Model):
     """
 
     id = models.UUIDField(
-        _("ID"),
+        "ID",
         default=uuid.uuid4,
         primary_key=True,
         editable=False,
