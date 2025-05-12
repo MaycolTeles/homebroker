@@ -3,40 +3,99 @@ services:
 
   db:
     image: postgres:latest
-    ports:
-      - 5432:5432
     volumes:
       - ./.postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgresql
+      - POSTGRES_PASSWORD=postgresql
+      - POSTGRES_DB=postgresql
+    networks:
+      - backend-network
+
+  redis:
+    image: redis:latest
+    command: ["redis-server", "--bind", "0.0.0.0"]
+    networks:
+      - backend-network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    networks:
+      - backend-network
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    networks:
+      - backend-network
+    restart: always
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-init:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - kafka
+    entrypoint: ["/bin/sh", "-c"]
+    command: "./scripts/kafka-init.sh"
+    volumes:
+      - ./backend/scripts:/scripts
+    networks:
+      - backend-network
+
+  kafka-consumer-asset-daily:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    command: sh -c "make run-asset-daily-kafka-consumer"
+    networks:
+      - backend-network
+
+  celery:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    command: sh -c "make run-celery"
+    env_file: ./backend/.env
+    restart: always
+    networks:
+      - backend-network
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    command: sh -c "make run-prod"
+    command: sh -c "make run-api-prod"
     env_file: ./backend/.env
     restart: always
     depends_on:
-        - db
-    links:
-      - db:db
+      - db
+      - redis
+    networks:
+      - backend-network
     volumes:
-      - "./backend/app:/app/app"
       - static_volume:/app/app/staticfiles
       - media_volume:/app/app/mediafiles
 
   nginx:
     build: ./nginx
+    depends_on:
+      - backend
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/mediafiles
     ports:
       - 8080:80
-    depends_on:
-      - backend
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
 
 volumes:
   postgres_data:

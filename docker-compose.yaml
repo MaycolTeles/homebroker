@@ -1,12 +1,14 @@
-
 services:
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
-    command: sh -c "make run"
+    command: sh -c "make run-api"
     env_file: ./backend/.env
+    environment:
+      DB: sqlite3
+      DJANGO_DEBUG: true
     restart: always
     ports:
       - "8000:8000"
