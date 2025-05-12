@@ -10,33 +10,34 @@ def _split_env_string(env_string: str) -> list[str]:
     Parse a string from the environment into a list.
 
     Example:
-    ----------
     `"localhost 127.0.0.1 0.0.0.0"` -> [`"localhost"`, `"127.0.0.1"`, `"0.0.0.0"`]
 
     Args:
-    ----
-    * `env_string`: `str`
-        The string to be parsed.
+        env_string (`str`): The string to be parsed.
     """
     return env_string.split(" ")
 
 
-DB = config("DB")
+DB: str = config("DB")  # type: ignore
 
-DB_HOST = config("DB_HOST")
+DB_HOST: str = config("DB_HOST")  # type: ignore
 
-DB_USER = config("DB_USER")
+DB_USER: str = config("DB_USER")  # type: ignore
 
-DB_PASSWORD = config("DB_PASSWORD")
+DB_PASSWORD: str = config("DB_PASSWORD")  # type: ignore
 
-DB_PORT = config("DB_PORT")
+DB_PORT: int = config("DB_PORT")
 
-DB_NAME = config("DB_NAME")
+DB_NAME: str = config("DB_NAME")  # type: ignore
 
-DJANGO_SECRET_KEY = config("DJANGO_SECRET_KEY")
+DJANGO_SECRET_KEY: str = config("DJANGO_SECRET_KEY")  # type: ignore
 
-DJANGO_DEBUG = config("DJANGO_DEBUG", cast=bool, default=False)
+DJANGO_DEBUG: bool = config("DJANGO_DEBUG", cast=bool, default=False)
 
 DJANGO_ALLOWED_HOSTS: list[str] = config("DJANGO_ALLOWED_HOSTS", cast=_split_env_string)  # type: ignore
 
 DJANGO_CSRF_TRUSTED_ORIGINS: list[str] = config("DJANGO_CSRF_TRUSTED_ORIGINS", cast=_split_env_string)  # type: ignore
+
+REDIS_HOST: str = config("REDIS_HOST")  # type: ignore
+
+KAFKA_HOST: str = config("KAFKA_HOST")  # type: ignore

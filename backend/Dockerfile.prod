@@ -26,6 +26,10 @@ RUN apt-get update \
 COPY /scripts/entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
+
+# Copy env file
+COPY .env .
+
 # Copy Makefile
 COPY ./Makefile .
 
@@ -35,6 +39,9 @@ COPY ./poetry.lock .
 
 # Install project dependencies
 RUN make install-prod
+
+# Copy the rest of the application code
+COPY /app /app/app/
 
 # Clean up apt cache to reduce image size
 RUN apt-get remove --purge -y \

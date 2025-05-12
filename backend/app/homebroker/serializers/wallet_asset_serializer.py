@@ -1,5 +1,5 @@
 """
-Module containing the WalletAsset serializer.
+Module containing all the WalletAsset-related serializers.
 """
 
 from rest_framework import serializers

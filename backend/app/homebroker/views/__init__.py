@@ -2,13 +2,13 @@
 __init__ module to export all the Homebroker-related views.
 """
 
-__all__ = [
+__all__ = (
     "AssetDailyViewSet",
     "AssetViewSet",
     "OrderViewSet",
     "WalletAssetViewSet",
     "WalletViewSet",
-]
+)
 
 
 from .asset_daily_viewset import AssetDailyViewSet

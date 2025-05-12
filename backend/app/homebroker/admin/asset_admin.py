@@ -1,5 +1,5 @@
 """
-Module containing the AssetAdmin class.
+Module containing the `AssetAdmin` class.
 """
 
 from django.contrib import admin

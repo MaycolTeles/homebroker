@@ -4,6 +4,7 @@ Module containing the AssetDaily views.
 
 from rest_framework.viewsets import ModelViewSet
 
+from homebroker.filters import AssetDailyFilter
 from homebroker.models import AssetDaily
 from homebroker.serializers import AssetDailySerializer
 
@@ -17,8 +18,10 @@ class AssetDailyViewSet(ModelViewSet):
     * Create
     * Retrieve
     * Update
+    * Partial Update
     * Destroy
     """
 
     queryset = AssetDaily.objects.all()
     serializer_class = AssetDailySerializer
+    filterset_class = AssetDailyFilter

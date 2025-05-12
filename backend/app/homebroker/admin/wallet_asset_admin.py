@@ -1,5 +1,5 @@
 """
-Module containing the WalletAssetAdmin class.
+Module containing the `WalletAssetAdmin` class.
 """
 
 from django.contrib import admin

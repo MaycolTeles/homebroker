@@ -101,17 +101,17 @@ class WalletAssetViewSetTestCase(BaseAPITestCase):
         """
         self.login()
 
-        test_shares = 100.00
+        test_shares = 100
         test_wallet_asset = MixerHomebrokerFactory.create_wallet_asset(shares=test_shares)
 
         self.assertEqual(test_wallet_asset.shares, test_shares)
 
-        test_new_shares = 200.00
+        test_new_shares = 200
         url = reverse(DETAIL_VIEW_NAME, kwargs={"pk": test_wallet_asset.id})
         response = self.client.patch(url, {"shares": test_new_shares})
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()["shares"], f"{test_new_shares:.2f}")
+        self.assertEqual(response.json()["shares"], test_new_shares)
 
     def test_should_delete_wallet_asset_instance(self):
         """

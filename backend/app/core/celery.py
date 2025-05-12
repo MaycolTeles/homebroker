@@ -9,11 +9,13 @@ import os
 
 from celery import Celery
 
+from core.constants import REDIS_HOST
+
 
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 
-app = Celery("core", broker="redis://redis:6379/0")
+app = Celery("core", broker=REDIS_HOST, backend=REDIS_HOST)
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.

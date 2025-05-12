@@ -18,6 +18,7 @@ class AssetViewSet(ModelViewSet):
     * Create
     * Retrieve
     * Update
+    * Partial Update
     * Destroy
     """
 

@@ -11,10 +11,9 @@ class ORDER_STATUS_CHOICES(models.TextChoices):  # noqa: N801
     Choices for the order status.
     """
 
-    CLOSED = "closed", _("Closed")
-    FAILED = "failed", _("Failed")
-    OPEN = "open", _("Open")
-    PENDING = "pending", _("Pending")
+    CLOSED = "CLOSED", _("Closed")  # Totally executed
+    FAILED = "FAILED", _("Failed")  # Failed or cancelled by whatever reason
+    OPEN = "OPEN", _("Open")  # Just created or partially executed
 
 
 class ORDER_TYPE_CHOICES(models.TextChoices):  # noqa: N801
@@ -22,5 +21,5 @@ class ORDER_TYPE_CHOICES(models.TextChoices):  # noqa: N801
     Choices for the order type.
     """
 
-    BUY = "buy", _("Buy")
-    SELL = "sell", _("Sell")
+    BUY = "BUY", _("Buy")
+    SELL = "SELL", _("Sell")

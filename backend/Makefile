@@ -1,18 +1,28 @@
+# ---------- UTILS ---------
+.PHONY: ssh
+ssh:
+	docker-compose exec backend bash
+
 .PHONY: setup
 setup:
 	./scripts/setup.sh
 
 
-.PHONY: run
-run:
-	cd app && poetry run python manage.py runserver 0.0.0.0:8000
+.PHONY: install-dev
+install-dev:
+	poetry install --with dev
 
 
-.PHONY: run-prod
-run-prod:
-	cd app && poetry run gunicorn core.wsgi --bind 0.0.0.0:8000
+.PHONY: install-prod
+install-prod:
+	poetry install --with prod
 
 
+.PHONY: pre-commit
+pre-commit: poetry run pre-commit run --all-files
+
+
+# ---------- DJANGO ----------
 .PHONY: migrations
 migrations:
 	poetry run python app/manage.py makemigrations
@@ -28,19 +38,47 @@ shell:
 	poetry run python app/manage.py shell
 
 
-.PHONY: ssh
-ssh:
-	docker-compose exec backend bash
+.PHONY: run-api
+run-api:
+	cd app && poetry run python manage.py runserver 0.0.0.0:8000
 
 
+.PHONY: run-api-prod
+run-api-prod:
+	cd app && poetry run uvicorn core.asgi:application --host 0.0.0.0 --port 8000
+
+
+# ---------- CELERY ----------
+.PHONY: run-celery
+run-celery:
+	cd app && celery -A core worker -l INFO
+
+
+# .PHONY: run-celery-beat
+# run-celery-beat:
+# 	cd app && celery -A core beat -l INFO
+
+
+# .PHONY: run-celery-flower
+# run-celery-flower:
+# 	cd app && celery -A core flower --port=5555
+
+
+# ---------- KAFKA ----------
+.PHONY: run-asset-daily-kafka-consumer
+run-asset-daily-kafka-consumer:
+	cd app && poetry run python manage.py start_homebroker_kafka_consumer asset_daily
+
+
+# ---------- QUALITY ----------
 .PHONY: test
 test:
-	poetry run pytest app/ -v -n auto
+	poetry run pytest app/
 
 
 .PHONY: coverage
 coverage:
-	poetry run pytest app/ -v -n auto --html=test_report/test-report.html --cov-report=html
+	poetry run pytest app/ -v -n auto --html=test_report/test-report.html --cov=app/ --cov-report=html
 
 
 .PHONY: lint
@@ -58,20 +96,7 @@ format-check:
 	poetry run ruff format --check
 
 
-.PHONY: install-dev
-install-dev:
-	poetry install --with dev
-
-
-.PHONY: install-prod
-install-prod:
-	poetry install --with prod
-
-
-.PHONY: commit
-commit: poetry run pre-commit run --all-files
-
-
+# ---------- CLEAN UP ----------
 # Remove build artifacts
 .PHONY: clean-build
 clean-build:

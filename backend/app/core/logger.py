@@ -16,18 +16,13 @@ def get_logger(component: str, subcomponent: str, **kwargs) -> stdlib.BoundLogge
     This method returns the logger instance with the provided component and subcomponent names.
 
     Args:
-    ----
-    * `component` : `str`
-        The name of the component.
-    * `subcomponent` : `str`
-        The name of the subcomponent.
-    * `**kwargs` : `Any`
-        Any additional keyword arguments to be passed to the logger.
+        component (`str`): The name of the component.
+        subcomponent (`str`): The name of the subcomponent.
+        **kwargs (`dict[str, Any]`): Any additional keyword arguments to be passed to the logger.
 
     Returns:
-    --------------
-    `BoundLogger`
-        The logger instance with the provided component and subcomponent names
-        and any additional keyword arguments.
+        `BoundLogger`: The logger instance
+            with the provided component and subcomponent names
+            and any additional keyword arguments.
     """
     return stdlib.get_logger(component=component, subcomponent=subcomponent, **kwargs)

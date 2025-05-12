@@ -3,9 +3,9 @@
 # Script to wait for the PostgreSQL database to be ready before starting the Django application
 # And aplly the migrations and collect the static files.
 
-if [ "$DB" = "postgres" ]
+if [ "$DB" = "postgresql" ]
 then
-    echo "Waiting for postgres..."
+    echo "Waiting for postgresql..."
 
     while ! nc -z $DB_HOST $DB_PORT; do
       sleep 0.1

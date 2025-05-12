@@ -11,25 +11,21 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 
 
 if TYPE_CHECKING:
     from account.models import User
 
 
-class BaseTestCase(TestCase):
+class _CreateUserMixin:
     """
-    Base Test Case class containing common attributes and methods for all test cases.
+    Mixin to create a user instance.
 
-    This class defines the method to create a user to be used in any test cases.
-
-    Methods:
-    ------------
-        * `create_user`: Method to create a user.
+    This mixin provides a method to create a user instance using the `mixer` library.
     """
 
-    def create_user(self, *args, **kwargs) -> User:
+    def create_user(self, **kwargs) -> User:
         """
         Create a user instance.
 
@@ -41,5 +37,17 @@ class BaseTestCase(TestCase):
 
         from account.models import User
 
-        user: User = mixer.blend(User, *args, **kwargs)  # type: ignore
+        user: User = mixer.blend(User, **kwargs)  # type: ignore
         return user
+
+
+class BaseTestCase(TestCase, _CreateUserMixin):
+    """
+    Base Test Case class containing common methods for all test cases.
+    """
+
+
+class BaseTransactionTestCase(TransactionTestCase, _CreateUserMixin):
+    """
+    Base Transaction Test Case class containing common methods for all test cases.
+    """

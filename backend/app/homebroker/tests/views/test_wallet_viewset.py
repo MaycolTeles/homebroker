@@ -179,7 +179,7 @@ class WalletViewSetTestCase(BaseAPITestCase):
 
         # Making the logged user a superuser
         self.user.is_superuser = True
-        self.user.save()
+        self.user.save(update_fields=("is_superuser",))
 
         url = reverse(LIST_VIEW_NAME)
         response = self.client.get(url)

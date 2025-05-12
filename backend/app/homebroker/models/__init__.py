@@ -2,13 +2,13 @@
 __init__ module to export all the Homebroker-related models.
 """
 
-__all__ = [
+__all__ = (
     "Asset",
     "AssetDaily",
     "Order",
     "Wallet",
     "WalletAsset",
-]
+)
 
 
 from .asset import Asset

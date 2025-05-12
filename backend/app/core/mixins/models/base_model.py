@@ -14,16 +14,10 @@ class BaseModel(models.Model):
     """
     Base Model class to add some common fields to all models.
 
-    Fields:
-    -----------
-    * `id` : `UUIDField`
-        To be used as the primary key.
-
-    * `created_at` : `DateTimeField`
-        To store the date and time of creation.
-
-    * `updated_at` : `DateTimeField`
-        To store the date and time of the last update.
+    Attributes:
+        id (`UUIDField`): The model primary key and unique identifier.
+        created_at (`DateTimeField`): The date and time the record was created.
+        updated_at (`DateTimeField`): The date and time the record was last updated.
     """
 
     id = models.UUIDField(

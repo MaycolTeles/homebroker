@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
-from .constants import (
+from core.constants import (
     DB,
     DB_HOST,
     DB_NAME,
@@ -23,6 +23,7 @@ from .constants import (
     DJANGO_CSRF_TRUSTED_ORIGINS,
     DJANGO_DEBUG,
     DJANGO_SECRET_KEY,
+    REDIS_HOST,
 )
 
 
@@ -41,11 +42,11 @@ DEBUG = DJANGO_DEBUG
 
 # Hosts & Origins
 HTTPS_ORIGINS = [f"https://{host}" for host in DJANGO_ALLOWED_HOSTS]
-HTPP_ORIGINS = [f"http://{host}" for host in DJANGO_ALLOWED_HOSTS]
+HTTP_ORIGINS = [f"http://{host}" for host in DJANGO_ALLOWED_HOSTS]
 
 ALLOWED_HOSTS = DJANGO_ALLOWED_HOSTS
 
-CORS_ALLOWED_ORIGINS = HTTPS_ORIGINS + HTPP_ORIGINS
+CORS_ALLOWED_ORIGINS = HTTPS_ORIGINS + HTTP_ORIGINS
 
 CSRF_TRUSTED_ORIGINS = DJANGO_CSRF_TRUSTED_ORIGINS
 
@@ -66,12 +67,15 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "drf_spectacular",
     "django_filters",
+    "corsheaders",
+    "channels",
     # Local apps
     "account",
     "homebroker",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -102,10 +106,13 @@ TEMPLATES = [
 WSGI_APPLICATION = "core.wsgi.application"
 
 
+FORMS_URLFIELD_ASSUME_HTTPS = True
+
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if DB == "postgres":
+if DB == "postgresql":
     default_db_config = {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": DB_HOST,
@@ -113,9 +120,6 @@ if DB == "postgres":
         "PASSWORD": DB_PASSWORD,
         "PORT": DB_PORT,
         "NAME": DB_NAME,
-        "OPTIONS": {
-            "sslmode": "require",
-        },
     }
 
 else:
@@ -183,14 +187,16 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "account.User"
 
+AUTHENTICATION_BACKENDS = ["account.backends.EmailOrUsernameModelBackend"]
 
+# Django Rest Framework
 REST_FRAMEWORK = {
     "PAGE_SIZE": 100,
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "core.http.BearerTokenAuthentication",
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -200,8 +206,8 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "EXCEPTION_HANDLER": "core.config.exception_handler.custom_exception_handler",
 }
-
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Product Management App",
@@ -209,4 +215,17 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SCHEMA_PATH_PREFIX": r"/api/",
+}
+
+
+# Channels
+ASGI_APPLICATION = "core.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [REDIS_HOST],
+        },
+    }
 }

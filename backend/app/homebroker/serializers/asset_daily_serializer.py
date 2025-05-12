@@ -1,5 +1,5 @@
 """
-Module containing the AssetDaily serializer.
+Module containing all the AssetDaily-related serializers.
 """
 
 from rest_framework import serializers

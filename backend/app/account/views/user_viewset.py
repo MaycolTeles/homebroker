@@ -16,6 +16,7 @@ class UserViewSet(BaseModelViewSet):
     * Create
     * Retrieve
     * Update
+    * Partial Update
     * Destroy
     """
 

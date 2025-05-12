@@ -1,14 +1,12 @@
 """
-Module containing the Asset model.
+Module containing the `Asset` model.
 """
 
-from decimal import Decimal
-
-from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.mixins import BaseModel
+from core.shared import NonNegativeValueValidator
 
 
 class Asset(BaseModel):
@@ -17,20 +15,16 @@ class Asset(BaseModel):
 
     This model is used to store some asset-related data.
 
-    Fields:
-    -----------
-        * `name`: `CharField`
-            The name of the asset.
-
-        * `symbol`: `CharField`
-            The symbol of the asset.
-
-        * `price`: `DecimalField`
-            The price of the asset.
-
-        * `image`: `URLField`
-            The image url of the asset.
+    Attributes:
+        name (`CharField`): The name of the asset.
+        symbol (`CharField`): The symbol of the asset.
+        price (`DecimalField`): The price of the asset.
+        image_url (`URLField`): The image url of the asset.
     """
+
+    class Meta:
+        verbose_name = "Asset"
+        verbose_name_plural = "Assets"
 
     name = models.CharField(
         _("Name"),
@@ -46,14 +40,16 @@ class Asset(BaseModel):
         _("Price"),
         max_digits=10,
         decimal_places=2,
-        validators=[MinValueValidator(Decimal(0.0))],
         help_text=_("The price of the asset. Must be greater than or equal to 0."),
+        validators=(NonNegativeValueValidator(),),
     )
-    image = models.URLField(
-        _("Image"),
+    image_url = models.URLField(
+        _("Image URL"),
         help_text=_("The image url of the asset."),
     )
 
-    class Meta:
-        verbose_name = "Asset"
-        verbose_name_plural = "Assets"
+    def __str__(self) -> str:
+        """
+        Return the asset name.
+        """
+        return self.name

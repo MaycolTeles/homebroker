@@ -2,13 +2,13 @@
 __init__ module to export all the Homebroker-related admin classes.
 """
 
-__all__ = [
+__all__ = (
     "AssetAdmin",
     "AssetDailyAdmin",
     "OrderAdmin",
     "WalletAdmin",
     "WalletAssetAdmin",
-]
+)
 
 
 from .asset_admin import AssetAdmin

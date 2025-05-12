@@ -31,7 +31,12 @@ django-filter = "^24.2"
 structlog = "^24.4.0"
 python-decouple = "^3.8"
 celery = "^5.4.0"
+redis = "^5.2.1"
 django-click = "^2.4.0"
+django-cors-headers = "^4.7.0"
+psycopg = {extras = ["binary"], version = "^3.2.6"}
+channels = "^4.2.2"
+channels-redis = "^4.2.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -47,6 +52,8 @@ pre-commit = "^3.7.1"
 
 [tool.poetry.group.prod.dependencies]
 gunicorn = "^22.0.0"
+uvicorn = {extras = ["standard"], version = "^0.34.2"}
+confluent-kafka = "^2.10.0"
 
 
 # ======= pytest =======
@@ -86,6 +93,11 @@ ignore = [
     "ANN002",
     # Missing type annotation for `**kwargs` (`ANN003`)
     "ANN003",
+    # Dynamically typed expressions (typing.Any) are disallowed (`ANN401`)
+    "ANN401",
+
+    # Unused method argument: `kwargs` (`ARG002`)
+    "ARG002",
 
     # Missing trailing comma in a single-line tuple (`COM812`)
     "COM812",
@@ -102,8 +114,8 @@ ignore = [
     "D401",
     # Section name should end with a newline (`D406`)
     "D406",
-    # Section underline should match the length of the section name (`D409`)
-    "D409",
+    # Missing dashed underline after section (`D407`)
+    "D407",
     # Missing blank line after last section (`D413`)
     "D413",
     # Missing argument description in the docstring for `<method_name>`: `<argument_name>` (`D417`)
@@ -123,6 +135,11 @@ ignore = [
 
     # Use `X | Y` for type annotations (`UP007`)
     "UP007",
+
+    # Move application import into a type-checking block (`TCH001`)
+    "TCH001",
+    # Move third-party import into a type-checking block (`TCH002`)
+    "TCH002",
 
     # Unnecessary assignment to `variable` before `return` statement (`RET504`)
     "RET504",

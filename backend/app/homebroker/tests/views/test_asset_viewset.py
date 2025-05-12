@@ -43,13 +43,13 @@ class AssetViewSetTestCase(BaseAPITestCase):
         test_name = "Test Asset"
         test_symbol = "TAS"
         test_price = 100.00
-        test_image = "https://example.com/image.jpg"
+        test_image_url = "https://example.com/image.jpg"
 
         data = {
             "name": test_name,
             "symbol": test_symbol,
             "price": test_price,
-            "image": test_image,
+            "image_url": test_image_url,
         }
 
         url = reverse(LIST_VIEW_NAME)

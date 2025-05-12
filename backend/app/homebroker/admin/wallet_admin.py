@@ -1,11 +1,20 @@
 """
-Module containing the WalletAdmin class.
+Module containing the `WalletAdmin` class.
 """
 
 from django.contrib import admin
 
 from core.mixins import BaseAdmin
-from homebroker.models import Wallet
+from homebroker.models import Wallet, WalletAsset
+
+
+class _WalletAssetInline(admin.TabularInline):
+    """
+    Inline class for the WalletAsset model.
+    """
+
+    model = WalletAsset
+    extra = 0
 
 
 @admin.register(Wallet)
@@ -15,10 +24,11 @@ class WalletAdmin(BaseAdmin):
     """
 
     list_display = (
-        "user",
         "name",
+        "user",
     )
     search_fields = (
-        "user",
         "name",
+        "user",
     )
+    inlines = (_WalletAssetInline,)

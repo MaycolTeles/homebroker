@@ -27,18 +27,13 @@ class BaseAPITestCase(APITestCase, BaseTestCase):
     This class defines common attributes and methods for all API test cases.
     It also provides a method to login the user.
 
-    Attributes
-    -------------
-        * `user` : `User`
-            The user instance.
+    Attributes:
+        user (`User`): The user instance.
+        user_id (`str`): The user ID.
 
-        * `user_id` : `str`
-            The user ID.
-
-    Methods
-    ----------
-        * `setUp`: Method to set up the test case. This method runs before every test case.
-        * `login`: Method to login the user.
+    Methods:
+        `setUp()`: Method to set up the test case. This method runs before every test case.
+        `login()`: Method to login the user.
     """
 
     user: User
@@ -53,9 +48,11 @@ class BaseAPITestCase(APITestCase, BaseTestCase):
         self.user = self.create_user()
         self.user_id = str(self.user.id)
 
+        return super().setUp()
+
     def login(self) -> None:
         """
-        Logs in the user.
+        Log the user in.
 
         This method logs in the user using the APIClient by force authenticating the user.
         """

@@ -17,6 +17,7 @@ class WalletAssetViewSet(ModelViewSet):
     * Create
     * Retrieve
     * Update
+    * Partial Update
     * Destroy
     """
 

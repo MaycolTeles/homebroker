@@ -1,5 +1,5 @@
 """
-Module containing the Asset serializer.
+Module containing all the Asset-related serializers.
 """
 
 from rest_framework import serializers

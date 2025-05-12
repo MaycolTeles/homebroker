@@ -1,5 +1,5 @@
 """
-Module containing the OrderAdmin class.
+Module containing the `OrderAdmin` class.
 """
 
 from django.contrib import admin
@@ -18,7 +18,8 @@ class OrderAdmin(BaseAdmin):
         "user",
         "shares",
         "partial",
-        "price",
+        "share_price",
+        "total_price",
         "status",
         "type",
     )
@@ -26,7 +27,13 @@ class OrderAdmin(BaseAdmin):
         "user",
         "shares",
         "partial",
-        "price",
+        "share_price",
+        "total_price",
         "status",
         "type",
+    )
+    list_filter = (
+        "status",
+        "type",
+        "asset__name",
     )

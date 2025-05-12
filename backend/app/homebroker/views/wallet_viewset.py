@@ -2,10 +2,8 @@
 Module containing the Wallet views.
 """
 
-from rest_framework.exceptions import MethodNotAllowed
-
-from core.common import DRF_VIEWSET_ACTIONS
 from core.mixins import BaseModelViewSet
+from core.shared import DRF_VIEWSET_ACTIONS
 from homebroker.filters import WalletFilter
 from homebroker.models import Wallet
 from homebroker.serializers import (
@@ -24,6 +22,7 @@ class WalletViewSet(BaseModelViewSet):
     * Create
     * Retrieve
     * Update
+    * Partial Update
     * Destroy
     """
 
@@ -38,14 +37,9 @@ class WalletViewSet(BaseModelViewSet):
         based on the action/method.
 
         Returns:
-        -------
             `WalletSerializer`: The WalletSerializer class.
         """
-        if self.action == DRF_VIEWSET_ACTIONS.LIST.value:
-            return WalletListSerializer
-
-        if self.action == DRF_VIEWSET_ACTIONS.RETRIEVE.value:
+        if self.action in DRF_VIEWSET_ACTIONS.DETAIL.value:
             return WalletDetailSerializer
 
-        error_message = f"Unknown action: {self.action}"
-        raise MethodNotAllowed(error_message)
+        return WalletListSerializer
