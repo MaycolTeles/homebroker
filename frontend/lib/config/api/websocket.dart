@@ -1,6 +1,5 @@
 import 'dart:convert' show json;
 import 'package:frontend/config/api/token_manager.dart' show TokenManager;
-import 'package:frontend/config/contants.dart' show API_DOMAIN;
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:web_socket_channel/web_socket_channel.dart'
     show WebSocketChannel;

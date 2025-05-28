@@ -2,6 +2,7 @@ class Account {
   final String id;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final String name;
   final String bank;
   final String agency;
   final String accountNumber;
@@ -10,6 +11,7 @@ class Account {
     required this.id,
     required this.createdAt,
     required this.updatedAt,
+    required this.name,
     required this.bank,
     required this.agency,
     required this.accountNumber,
@@ -21,6 +23,7 @@ class Account {
       id: json['id'],
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
+      name: json['name'],
       bank: json['bank'],
       agency: json['agency'],
       accountNumber: json['account_number'],

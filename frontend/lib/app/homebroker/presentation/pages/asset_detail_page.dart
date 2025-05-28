@@ -222,7 +222,10 @@ class _AssetDetailPageState extends State<AssetDetailPage> {
         axisLine: const AxisLine(width: 0),
       ),
       primaryYAxis: NumericAxis(
-        numberFormat: NumberFormat.simpleCurrency(locale: 'pt_BR'),
+        numberFormat: NumberFormat.simpleCurrency(
+          locale: 'pt_BR',
+          decimalDigits: 0,
+        ),
         majorGridLines: const MajorGridLines(width: 0),
         axisLine: const AxisLine(width: 0),
       ),
@@ -231,8 +234,11 @@ class _AssetDetailPageState extends State<AssetDetailPage> {
           dataSource: _assetsDailies,
           xValueMapper: (AssetDaily ad, _) => ad.datetime,
           yValueMapper: (AssetDaily ad, _) => ad.price,
-          // color: Colors.blue.withOpacity(0.2),
-        )
+          color: Colors.blue,
+          onRendererCreated: (ChartSeriesController controller) {
+            _chartSeriesController = controller;
+          },
+        ),
       ],
       tooltipBehavior: TooltipBehavior(
         enable: true,

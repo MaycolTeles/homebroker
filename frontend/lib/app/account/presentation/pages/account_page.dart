@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/app/account/api/entities/account.dart' show Account;
 import 'package:frontend/app/account/api/entities/user.dart' show User;
-import 'package:frontend/app/account/api/requests/account.dart';
 import 'package:frontend/app/account/api/requests/user.dart';
 import 'package:frontend/app/account/user_manager.dart';
 import 'package:frontend/core/components/api/api_future_builder.dart';
 import 'package:frontend/core/functions/platform.dart';
-import 'package:gap/gap.dart';
+import 'package:frontend/core/functions/utils.dart' show getUserFullName;
 
 class AccountPage extends StatefulWidget {
   static const url = '/minha-conta';
@@ -18,17 +17,13 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   late Future<User> _user;
-  late Future<Account> _account;
 
   @override
   void initState() {
     super.initState();
 
     String? userId = UserManager().userId;
-    String accountId = "b4bfaf97-9c91-4315-9a62-5c08b1d1244e";
-
     _user = UserAPI.getUserById(userId!);
-    _account = AccountAPI.getAccountById(accountId);
   }
 
   @override
@@ -39,30 +34,30 @@ class _AccountPageState extends State<AccountPage> {
 
   Widget _getBody() {
     return Center(
-      child: Column(
-        children: [
-          APIFutureBuilder<User>(
-            future: _user,
-            builder: (user) => _getUserData(user),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text("Dados da Conta Investimento:"),
-          ),
-          APIFutureBuilder<Account>(
-            future: _account,
-            builder: (account) => _getAccountData(account),
-          ),
-        ],
+      child: APIFutureBuilder<User>(
+        future: _user,
+        builder: (user) => _getData(user),
       ),
     );
   }
 
-  Widget _getUserData(User user) {
-    return Text(user.firstName);
+  Widget _getData(User user) {
+    String username = getUserFullName(user);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(username),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text("Dados da Conta Investimento:"),
+        ),
+        _getAccounts(user.accounts[0]),
+      ],
+    );
   }
 
-  Widget _getAccountData(Account account) {
+  Widget _getAccounts(Account account) {
     return Column(
       children: [
         Padding(

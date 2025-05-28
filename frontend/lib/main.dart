@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart' show LogInterceptor;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:frontend/app/account/user_manager.dart';

@@ -55,7 +55,7 @@ class AuthAPI {
     final body = dto.toJson();
     final response = await API.post('$_authURL/register', body: body);
 
-    String userId = response.data['user_id'];
+    String userId = response.data['user']['id'];
     UserManager().saveUserId(userId);
 
     String token = response.data['token'];
@@ -68,7 +68,7 @@ class AuthAPI {
     final body = dto.toJson();
     final response = await API.post('$_authURL/login', body: body);
 
-    String userId = response.data['user_id'];
+    String userId = response.data['user']['id'];
     UserManager().saveUserId(userId);
 
     String token = response.data['token'];
