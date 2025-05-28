@@ -15,12 +15,12 @@ class OrderSerializer(serializers.ModelSerializer):
     Class to serialize the Order model.
     """
 
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
     class Meta:
         model = Order
         fields = "__all__"
         read_only_fields = ("total_price",)
+
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     def update(self, instance: Order, validated_data: dict[str, Any]) -> Order:
         """

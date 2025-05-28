@@ -3,7 +3,6 @@ Module containing the `task_generate_asset_dailies` task.
 """
 
 import random
-import time
 from datetime import timedelta
 
 from celery import shared_task
@@ -28,8 +27,3 @@ def task_generate_asset_dailies() -> None:
             price = asset.price + random_price
 
             AssetDaily.objects.create(asset=asset, datetime=next_date, price=price)
-
-            # Created AssetDaily for <asset.name> on <next_date> with price <price>
-
-        # Sleep for 1 s before generating the next set of asset dailies
-        time.sleep(1)

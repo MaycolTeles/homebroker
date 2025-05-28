@@ -40,11 +40,9 @@ class WalletViewSetTestCase(BaseAPITestCase):
         """
         self.login()
 
-        test_user = self.user
         test_name = "Test Wallet"
 
         data = {
-            "user": test_user.id,
             "name": test_name,
         }
 

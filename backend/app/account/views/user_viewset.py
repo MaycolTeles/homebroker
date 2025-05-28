@@ -2,12 +2,13 @@
 Module containing the User views.
 """
 
+from rest_framework.viewsets import ModelViewSet
+
 from account.models import User
 from account.serializers import UserSerializer
-from core.mixins import BaseModelViewSet
 
 
-class UserViewSet(BaseModelViewSet):
+class UserViewSet(ModelViewSet):
     """
     API endpoint to define User actions.
 

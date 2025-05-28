@@ -13,13 +13,13 @@ class WalletSerializer(serializers.ModelSerializer):
     Class to serialize the Wallet model.
     """
 
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    performance = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
-
     class Meta:
         model = Wallet
         fields = "__all__"
         read_only_fields = ("total_invested", "current_balance")
+
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    performance = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
 
 
 class WalletListSerializer(WalletSerializer):

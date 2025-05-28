@@ -8,16 +8,11 @@ authors = [
 ]
 requires-python = ">= 3.12"
 readme = "README.md"
+license = "GNU"
 
 
 # ======= poetry =======
 [tool.poetry]
-name = "homebroker"
-version = "0.1.0"
-description = "A Homebroker as proposed by Full Cycle"
-authors = ["Maycol Teles <maycolteles@hotmail.com>"]
-license = "GNU"
-readme = "README.md"
 package-mode = false
 
 

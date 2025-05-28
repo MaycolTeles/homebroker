@@ -2,14 +2,19 @@
 Module containing the `AuthenticatedConsumer` class.
 """
 
-from typing import Optional
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Optional
 from urllib.parse import parse_qs
 
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.layers import BaseChannelLayer
 
-from account.models import User
 from core.logger import get_logger
+
+
+if TYPE_CHECKING:
+    from account.models import User
 
 
 logger = get_logger(component="core", subcomponent="websocket", consumer="AuthenticatedConsumer")

@@ -46,7 +46,6 @@ class OrderViewSetTestCase(BaseAPITestCase):
         self.login()
         self.user.add_amount_to_balance(Decimal(100_000))
 
-        test_user = self.user
         test_asset = MixerHomebrokerFactory.create_asset()
         test_wallet = MixerHomebrokerFactory.create_wallet()
         test_shares = 100.0
@@ -54,7 +53,6 @@ class OrderViewSetTestCase(BaseAPITestCase):
         test_share_price = 10.0
 
         data = {
-            "user": test_user.id,
             "asset": test_asset.id,
             "wallet": test_wallet.id,
             "shares": test_shares,

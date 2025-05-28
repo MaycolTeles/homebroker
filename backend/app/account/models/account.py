@@ -26,6 +26,11 @@ class Account(BaseModel):
         help_text=_("The User associated with the account."),
     )
 
+    name = models.CharField(
+        max_length=20,
+        help_text=_("The account name."),
+    )
+
     bank = models.CharField(
         max_length=10,
         help_text=_("The bank code associated with the account."),
