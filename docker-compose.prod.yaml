@@ -42,7 +42,7 @@ services:
     depends_on:
       - kafka
     entrypoint: ["/bin/sh", "-c"]
-    command: "./scripts/kafka-init.sh"
+    command: "/scripts/kafka-init.sh"
     volumes:
       - ./backend/scripts:/scripts
     networks:
